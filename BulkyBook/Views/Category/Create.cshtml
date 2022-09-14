@@ -1,0 +1,39 @@
+﻿@model Category
+<form method="post">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Create Category</h2>
+            <hr />
+        </div>
+        @*for error message in the top
+        <div asp-validation-summary="All"></div>
+
+        for error message above the field
+        <span asp-validation-for="Name" class="text-danger"></span>
+
+        *@
+        <div asp-validation-summary="All"></div>
+        @*to get the name and the displayorder field from the model*@
+        <div class="mb-3">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="DisplayOrder"></label>
+            <input asp-for="DisplayOrder" class="form-control" />
+            <span asp-validation-for="DisplayOrder" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:150px">Create</button>
+        <a asp-controller="Category" asp-action="Index" class="btn btn-secondary" style="width:150px">
+            Back to list
+        </a>
+    </div>
+</form>
+@*its fot not to hit the server evrey time if the tables are emptey and this use the script librery in shared folder _ValidationScriptsPartial*@
+@section Scripts
+    {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+   }
