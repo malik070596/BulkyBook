@@ -1,7 +1,6 @@
-﻿using BulkyBook.Data;
+﻿using BulkyBook.DataAccess;
 using BulkyBook.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace BulkyBook.Controllers
 {
@@ -38,6 +37,8 @@ namespace BulkyBook.Controllers
             {
                 _db.Categories.Add(obj);
                 _db.SaveChanges();
+                //the message of the creating is successed
+                TempData["success"] = "Category created Successfully";
                 return RedirectToAction("Index");
 
             }
@@ -49,17 +50,17 @@ namespace BulkyBook.Controllers
 
         public IActionResult Edit(int? id)
         {
-            if (id == null || id==0)
+            if (id == null || id == 0)
             {
                 return NotFound();
             }
             //var categoryFromDb = _db.Categories.Find(id);
-            var categoryFromDb = _db.Categories.Find(id);
-            //var category = _db.Categories.FirstOrDefault(c => c.Id == id);
+            //var categoryFromDb = _db.Categories.Find(id);
+            var category = _db.Categories.FirstOrDefault(c => c.Id == id);
             //var category = _db.Categories.FirstOrDefault(c => c.Id == id);
             //var categoryFromDbSingel = _db.Categories.SingleOrDefault(c => c.Id == id);
             //var categoryFromDbSingel = _db.Categories.SingleOrDefault(c => c.Id == id);
-            return View(categoryFromDb);
+            return View(category);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -74,13 +75,50 @@ namespace BulkyBook.Controllers
             //to check if all the field are true
             if (ModelState.IsValid)
             {
+                //to update the data in the database and savechanges its to save it
                 _db.Categories.Update(obj);
                 _db.SaveChanges();
+                TempData["success"] = "Category updated Successfully";
                 return RedirectToAction("Index");
 
             }
             return View(obj);
 
         }
+
+        //GET
+        //to edit one or more items that we have in the database
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            //var categoryFromDb = _db.Categories.Find(id);
+            var category = _db.Categories.FirstOrDefault(c => c.Id == id);
+
+            return View(category);
+        }
+
+        //Post
+        [HttpPost,ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        // to Delete an category and post it in the database
+        public IActionResult DeletePost(int? id)
+        {
+            //take the id from the data base and if there is no id we will get nothing notfound
+            var obj = _db.Categories.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            //(Remove) to Delete the data in the database and (savechanges) its to save it
+            _db.Categories.Remove(obj);
+            _db.SaveChanges();
+            TempData["success"] = "Category deleted Successfully";
+            return RedirectToAction("Index");
+
+        }
     }
+
 }
