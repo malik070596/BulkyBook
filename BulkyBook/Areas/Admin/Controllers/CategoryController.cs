@@ -3,19 +3,19 @@ using BulkyBook.DataAccess.Repository.IRepository;
 using BulkyBook.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BulkyBook.Controllers
+namespace BulkyBook.Areas.Admin.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ICategoryRepository _db;
-        public CategoryController(ICategoryRepository db)
+        private readonly IUnitOfWork _unitOfWork;
+        public CategoryController(IUnitOfWork unitOfWork)
         {
-            _db = db;
+            _unitOfWork = unitOfWork;
         }
         //Get
         public IActionResult Index()
         {
-            IEnumerable<Category> objCategoryList = _db.GetAll();
+            IEnumerable<Category> objCategoryList = _unitOfWork.Category.GetAll();
             return View(objCategoryList);
         }
         public IActionResult Create()
@@ -36,8 +36,8 @@ namespace BulkyBook.Controllers
             //to check if all the field are true
             if (ModelState.IsValid)
             {
-                _db.Add(obj);
-                _db.Save();
+                _unitOfWork.Category.Add(obj);
+                _unitOfWork.Save();
                 //the message of the creating is successed
                 TempData["success"] = "Category created Successfully";
                 return RedirectToAction("Index");
@@ -57,7 +57,7 @@ namespace BulkyBook.Controllers
             }
             //var categoryFromDb = _db.Categories.Find(id);
             //var categoryFromDb = _db.Categories.Find(id);
-            var category = _db.GetFirstOrDefault(u =>u.Id==id);
+            var category = _unitOfWork.Category.GetFirstOrDefault(u => u.Id == id);
             //var category = _db.Categories.FirstOrDefault(c => c.Id == id);
             //var categoryFromDbSingel = _db.Categories.SingleOrDefault(c => c.Id == id);
             //var categoryFromDbSingel = _db.Categories.SingleOrDefault(c => c.Id == id);
@@ -77,8 +77,8 @@ namespace BulkyBook.Controllers
             if (ModelState.IsValid)
             {
                 //to update the data in the database and savechanges its to save it
-                _db.Update(obj);
-                _db.Save();
+                _unitOfWork.Category.Update(obj);
+                _unitOfWork.Save();
                 TempData["success"] = "Category updated Successfully";
                 return RedirectToAction("Index");
 
@@ -96,26 +96,26 @@ namespace BulkyBook.Controllers
                 return NotFound();
             }
             //var categoryFromDb = _db.Categories.Find(id);
-            var category = _db.GetFirstOrDefault(u => u.Id == id);
+            var category = _unitOfWork.Category.GetFirstOrDefault(u => u.Id == id);
 
             return View(category);
         }
 
         //Post
-        [HttpPost,ActionName("Delete")]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         // to Delete an category and post it in the database
         public IActionResult DeletePost(int? id)
         {
             //take the id from the data base and if there is no id we will get nothing notfound
-            var obj = _db.GetFirstOrDefault(u => u.Id == id);
+            var obj = _unitOfWork.Category.GetFirstOrDefault(u => u.Id == id);
             if (obj == null)
             {
                 return NotFound();
             }
             //(Remove) to Delete the data in the database and (savechanges) its to save it
-            _db.Remove(obj);
-            _db.Save();
+            _unitOfWork.Category.Remove(obj);
+            _unitOfWork.Save();
             TempData["success"] = "Category deleted Successfully";
             return RedirectToAction("Index");
 

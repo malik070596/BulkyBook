@@ -9,6 +9,7 @@ public class ApplicationDbContext : DbContext
     {
 
     }
-    //to make ctegory table in the database
+    //to make tables in the database
     public DbSet<Category> Categories { get; set; }
+    public DbSet<CoverType> CoverTypes { get; set; }
 }
