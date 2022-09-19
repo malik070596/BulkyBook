@@ -1,6 +1,7 @@
 ﻿using BulkyBook.DataAccess;
 using BulkyBook.DataAccess.Repository.IRepository;
 using BulkyBook.Models;
+using BulkyBook.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -26,30 +27,45 @@ namespace BulkyBook.Areas.Admin.Controllers
 
         public IActionResult Upsert(int? id)
         {
-            Product product = new();
-            IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category.GetAll().Select
-                (
-                u => new SelectListItem
+            #region
+            //Product product = new();
+            //IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category.GetAll().Select(
+            //    u => new SelectListItem
+            //    {
+            //        Text = u.Name,
+            //        Value = u.Id.ToString()
+            //    });
+            //IEnumerable<SelectListItem> CoverTypeList = _unitOfWork.CoverType.GetAll().Select(
+            //    u => new SelectListItem
+            //    {
+            //        Text = u.Name,
+            //        Value = u.Id.ToString()
+            //    });
+            #endregion
+            ProductVM productVM = new()
+            {
+                Product = new(),
+                CategoryList = _unitOfWork.Category.GetAll().Select(i => new SelectListItem
                 {
-                    Text = u.Name,
-                    Value = u.Id.ToString()
-
-                });
-
-            IEnumerable<SelectListItem> CoverTypeList = _unitOfWork.CoverType.GetAll().Select
-                (
-                u => new SelectListItem
+                    Text = i.Name,
+                    Value = i.Id.ToString(),
+                }),
+                CoverTypeList = _unitOfWork.CoverType.GetAll().Select(i => new SelectListItem
                 {
-                    Text = u.Name,
-                    Value = u.Id.ToString()
+                    Text = i.Name,
+                    Value = i.Name.ToString()
+                }),
 
-                });
+            };
+
 
             if (id == null || id == 0)
             {
                 //Create Product
-                ViewBag.CategoryList = CategoryList;
-                return View(product);
+                //ViewBag.CategoryList = CategoryList;
+                //ViewData["CoverTypeList"] = CoverTypeList;
+                //ViewBag.CoverTypleList = CoverTypeList;
+                return View(productVM);
             }
             else
             {
@@ -57,13 +73,13 @@ namespace BulkyBook.Areas.Admin.Controllers
 
             }
 
-            return View(product);
+            return View(productVM);
         }
         //Post
         [HttpPost]
         [ValidateAntiForgeryToken]
         // to Edit an category and post it in the database
-        public IActionResult Upsert(Category obj)
+        public IActionResult Upsert(Category obj, IFormFile file)
         {
             // to check that the fields have not the same information
             if (obj.Name == obj.DisplayOrder.ToString())
