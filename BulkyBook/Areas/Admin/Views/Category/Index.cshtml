@@ -41,13 +41,9 @@
                         @obj.DisplayOrder
                     </td>
                     <td>
-                        <div class="w-100 btn-group" role="group">
+                        <div class="w-75 btn-group" role="group">
                             <a asp-controller="Category" asp-action="Edit" asp-route-id="@obj.Id"
                            class="btn btn-primary mx-4"><i class="bi bi-plus-lg"></i>Edit</a>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="w-75 btn-group" role="group">
                             <a asp-controller="Category" asp-action="Delete" asp-route-id="@obj.Id"
                            class="btn btn-danger mx-2"><i class="bi bi-x-lg"></i>Delete</a>
                         </div>

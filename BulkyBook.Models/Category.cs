@@ -5,7 +5,7 @@ namespace BulkyBook.Models;
 
 public class Category
 {
-    /*key its mean the primary key in the data base.
+    /*key its mean the primary key in the database.
      display name its for name that will be shown above the field.
      Range its for the value that we fill the field with it should be between tow values en the errormessage its give as the error.
     */
