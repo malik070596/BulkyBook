@@ -18,11 +18,11 @@ function loadDataTable() {
                 "data": "id",
                 "render": function (data) {
                     return `
-                        <div class="w-75 btn-group" role="group">
+                        <div class="w-100 btn-group" role="group">
                           <a href="/Admin/Product/Upsert?id=${data}"
-                          class="btn btn-primary mx-4"><i class="bi bi-plus-lg"></i>Edit</a>
+                          class="btn btn-primary mx-1"><i class="bi bi-plus-circle"></i>&nbsp Edit</a>
                           <a onClick=Delete('/Admin/Product/Delete/${data}')
-                          class="btn btn-danger mx-2"><i class="bi bi-x-lg"></i>Delete</a>
+                          class="btn btn-danger mx-1"><i class="bi bi-trash3"></i>&nbsp Delete</a>
                         </div>
                     `
                 },
@@ -34,7 +34,7 @@ function loadDataTable() {
 function Delete(url) {
     Swal.fire({
         title: 'Are you sure?',
-        text: "You won't be able to revert this!",
+        text: "You are about to delete this product!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
