@@ -8,6 +8,7 @@ using Product = BulkyBook.Models.Product;
 
 namespace BulkyBook.Areas.Customer.Controllers
 {
+    [Area("Customer")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
