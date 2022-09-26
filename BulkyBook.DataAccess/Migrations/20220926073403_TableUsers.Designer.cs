@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BulkyBook.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220923124150_application")]
-    partial class application
+    [Migration("20220926073403_TableUsers")]
+    partial class TableUsers
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

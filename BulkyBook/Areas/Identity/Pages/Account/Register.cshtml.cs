@@ -22,6 +22,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using BulkyBook.DataAccess.Repository.IRepository;
 
 namespace BulkyBook.Areas.Identity.Pages.Account
 {
