@@ -43,7 +43,7 @@ namespace BulkyBook.Areas.Customer.Controllers
             shoppingCart.ApplicationUserId = claim.Value;
 
             ShoppingCart cartFromDb = _unitOfWork.ShoppingCart.GetFirstOrDefault(
-                u => u.ApplicationUserId == claim.Value && u.ProductId==shoppingCart.ProductId );
+                u => u.ApplicationUserId == claim.Value && u.ProductId == shoppingCart.ProductId);
 
             if (cartFromDb == null)
             {
@@ -67,15 +67,15 @@ namespace BulkyBook.Areas.Customer.Controllers
 
 
 
-public IActionResult Privacy()
-    {
-        return View();
-    }
+        public IActionResult Privacy()
+        {
+            return View();
+        }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
     }
-}
 }

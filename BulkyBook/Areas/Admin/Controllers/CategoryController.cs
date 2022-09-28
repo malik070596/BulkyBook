@@ -57,12 +57,16 @@ namespace BulkyBook.Areas.Admin.Controllers
             {
                 return NotFound();
             }
+            #region
             //var categoryFromDb = _db.Categories.Find(id);
             //var categoryFromDb = _db.Categories.Find(id);
-            var category = _unitOfWork.Category.GetFirstOrDefault(u => u.Id == id);
             //var category = _db.Categories.FirstOrDefault(c => c.Id == id);
             //var categoryFromDbSingel = _db.Categories.SingleOrDefault(c => c.Id == id);
             //var categoryFromDbSingel = _db.Categories.SingleOrDefault(c => c.Id == id);
+            #endregion
+
+            var category = _unitOfWork.Category.GetFirstOrDefault(u => u.Id == id);
+
             return View(category);
         }
         [HttpPost]
