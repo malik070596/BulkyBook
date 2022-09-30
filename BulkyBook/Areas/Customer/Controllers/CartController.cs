@@ -115,7 +115,7 @@ namespace BulkyBook.Areas.Customer.Controllers
                 LineItems = new List<SessionLineItemOptions>(),
 
                 Mode = "payment",
-                SuccessUrl = domain + $"customer/cart/OrderConfirmation?={ShoppingCartVM.OrderHeader.Id}",
+                SuccessUrl = domain + $"customer/cart/OrderConfirmation?id={ShoppingCartVM.OrderHeader.Id}",
                 CancelUrl = domain + $"customer/cart/index",
             };
             foreach (var item in ShoppingCartVM.ListCart)
@@ -139,7 +139,7 @@ namespace BulkyBook.Areas.Customer.Controllers
 
             var service = new SessionService();
             Session session = service.Create(options);
-            _unitOfWork.OrderHeader.UpdateStripePaymentId(ShoppingCartVM.OrderHeader.Id, session.Id, session.PaymentIntentId);
+            _unitOfWork.OrderHeader.UpdateStripePaymentID(ShoppingCartVM.OrderHeader.Id, session.Id, session.PaymentIntentId);
             _unitOfWork.Save();
             Response.Headers.Add("Location", session.Url);
             return new StatusCodeResult(303);
